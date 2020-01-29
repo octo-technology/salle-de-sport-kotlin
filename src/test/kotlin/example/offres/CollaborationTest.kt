@@ -1,5 +1,6 @@
 package example.offres
 
+import example._sharedkernel.eventbus.Event
 import example._sharedkernel.eventbus.EventListener
 import example._sharedkernel.uuid.RandomUUIDGenerator
 import example.offres.commands.changerleprixdebase.ChangerLePrixDeBaseCommand
@@ -16,7 +17,7 @@ class CollaborationTest : StringSpec({
     "Publication d'une formule et changement de son prix de base" {
         // GIVEN
         val eventBus = DependenciesInjection.provideEventPublisher()
-        val listener = mockk<EventListener>()
+        val listener = mockk<EventListener<Event>>()
         every { listener.notify(any()) } returns Unit
         eventBus.subscribe(listener)
         val publierUneFormuleHander = DependenciesInjection.providePublierUneFormuleCommandHandler()

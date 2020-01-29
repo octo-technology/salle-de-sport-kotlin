@@ -1,14 +1,16 @@
 package example.pilotage.infrastructure
 
+import example._sharedkernel.eventbus.EventListener
 import example.pilotage.AbonnementSouscritRepository
 import example.pilotage.commands.AbonnementSouscritListener
 import example.pilotage.commands.StoreAbonnementSouscritCommandHandler
 import example.pilotage.queries.ChiffreAffaireMensuelQueryHandler
+import example.pilotage.domain.AbonnementSouscrit
 
 object DependenciesInjection {
     private var abonnementSouscritRepository: AbonnementSouscritRepository? = null
     private var storeAbonnementSouscritCommandHandler: StoreAbonnementSouscritCommandHandler? = null
-    private var abonnementSouscritListener: AbonnementSouscritListener? = null
+    private var abonnementSouscritListener: EventListener<example.souscription.domain.AbonnementSouscrit>? = null
     private var chiffreAffaireMensuelQueryHandler: ChiffreAffaireMensuelQueryHandler? = null
 
     fun provideAbonnementSouscritRepository(): AbonnementSouscritRepository {
@@ -27,7 +29,7 @@ object DependenciesInjection {
         return storeAbonnementSouscritCommandHandler!!
     }
 
-    fun provideAbonnementSouscritListener(): AbonnementSouscritListener {
+    fun provideAbonnementSouscritListener(): EventListener<example.souscription.domain.AbonnementSouscrit> {
         if (abonnementSouscritListener == null) {
             abonnementSouscritListener = AbonnementSouscritListener(
                 provideStoreAbonnementSouscritCommandHandler()
